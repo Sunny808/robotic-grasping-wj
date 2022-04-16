@@ -12,7 +12,7 @@
   <component name="TemplatesService">
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="$MODULE_DIR$" />
+        <option value="$MODULE_DIR$/../robotic-grasping-branch" />
       </list>
     </option>
   </component>
