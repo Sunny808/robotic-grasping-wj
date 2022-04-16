@@ -256,9 +256,9 @@ def find_bound(image, a_img):
 			if num <= 2:
 				break
 
-	thin_img = image
-	cv2.namedWindow('thin_pos', cv2.WINDOW_NORMAL)
-	cv2.imshow('thin_pos', thin_img * 255)
+	# skeleton_img = image
+	# cv2.namedWindow('skeleton_pos', cv2.WINDOW_NORMAL)
+	# cv2.imshow('skeleton_pos', skeleton_img * 255)
 
 	for r in range(1, image.shape[1] - 1):
 		for c in range(1, image.shape[0] - 1):
@@ -329,22 +329,32 @@ def broadcast_bound(bound_set, weight_img, index_img, width_out, iteration = 10,
 
 
 def gr_gaussian(pos_out, ang_out, width_out):
+	kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+	pos_out = cv2.morphologyEx(pos_out, cv2.MORPH_CLOSE, kernel)
+	pos_out = cv2.morphologyEx(pos_out, cv2.MORPH_OPEN, kernel)
+	width_out = cv2.morphologyEx(width_out, cv2.MORPH_CLOSE, kernel)
+	width_out = cv2.morphologyEx(width_out, cv2.MORPH_OPEN, kernel)
+	ang_out = cv2.morphologyEx(ang_out, cv2.MORPH_CLOSE, kernel)
+	ang_out = cv2.morphologyEx(ang_out, cv2.MORPH_OPEN, kernel)
 	cv2.imshow('pos_out', pos_out * 255)
 
 	thin0 = morphology.thin(pos_out)
-	thin = thin0.astype(np.float32)
-	skeleton, distance = morphology.medial_axis(pos_out, return_distance = True)
-	skeleton = skeleton.astype(np.float32)
-	print(np.max(distance))
-	cv2.imshow('skeleton', skeleton*255)
+	thin = thin0.astype(np.uint8)
+	# threshold = 1
+	# skeleton, distance = morphology.medial_axis(pos_out, return_distance = True)
+	# skeleton = skeleton.astype(np.float32)
+	# dist_on_skeleton = distance * skeleton
+	# dist_on_skeleton[dist_on_skeleton <= threshold] = 0
 
 	bound_point, pos_out, matrix_flag = find_bound(thin, ang_out)
 	pos_out = broadcast_bound(bound_point, pos_out, matrix_flag, width_out)
-	cv2.namedWindow('thin_pre', cv2.WINDOW_NORMAL)
-	cv2.imshow('thin_pre', thin * 255)
+	
+	cv2.namedWindow('thin', cv2.WINDOW_NORMAL)
+	cv2.imshow('thin', thin * 255)
 	cv2.imwrite('thin.png', thin * 255)
 	cv2.imshow('pos_out2', pos_out * 255)
 	cv2.waitKey(0)
+	
 	pos_out = gaussian(pos_out, 2.0, preserve_range = True)
 	max_pos = np.max(pos_out)
 	if max_pos:

@@ -44,7 +44,7 @@ def parse_args():
     # Datasets
     parser.add_argument('--dataset', type=str, default = 'cornell', # default is empty.
                         help='Dataset Name ("cornell" or "jaquard")')
-    parser.add_argument('--dataset-path', type=str, default = 'cornell', # default is empty.
+    parser.add_argument('--dataset-path', type=str, default = r"\D:\Code\Antipodal Robotic Grasping\cornell",
                         help='Path to dataset')
     parser.add_argument('--split', type=float, default=0.8,
                         help='Fraction of data for training (remainder is validation)')

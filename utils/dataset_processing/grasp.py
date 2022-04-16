@@ -200,7 +200,7 @@ class GraspRectangles:
         return average_grasp_width
 
     @staticmethod
-    def gr_dilate(grs, pos_out, ang_out, width_out, shape, kernel_size=9):
+    def gr_dilate(grs, pos_out, ang_out, width_out, shape, w_threshold, kernel_size=3):
         """
         Dilate a GraspRectangle according to it's angel
         :param grs:
@@ -209,6 +209,7 @@ class GraspRectangles:
         :param width_out: width
         :param kernel_size: the size of the kernel
         :param shape: the size of the image
+        :param w_threshold:
         """
         a = np.uint8(np.zeros((kernel_size, kernel_size)))
         str_element_horizon = a.copy()

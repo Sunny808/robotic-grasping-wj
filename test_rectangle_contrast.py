@@ -6,7 +6,7 @@ from utils.dataset_processing import grasp
 import glob
 import os
 
-grasp_files_pos = glob.glob(os.path.join('cornell', '*', 'pcd*cpos.txt'))
+grasp_files_pos = glob.glob(os.path.join("D:/Code/Antipodal Robotic Grasping/cornell", '*', 'pcd*cpos.txt'))
 grasp_files_pos.sort()
 rgb_files = [f.replace('cpos.txt', 'r.png') for f in grasp_files_pos]
 grasp_files_neg = [f.replace('pos.txt', 'neg.txt') for f in grasp_files_pos]
@@ -74,12 +74,13 @@ def crop_image(image, bb):
 	return img
 
 
-for idx in range(492, 500):
+for idx in range(508, 600):
 	print(idx)
 	rot = 0
 	zoom_factor = 1.0
-	grasping = CornellDataset('cornell')
-	test_grasp = TestCornellDataset('cornell')
+	file_path = "D:/Code/Antipodal Robotic Grasping/cornell"
+	grasping = CornellDataset(file_path)
+	test_grasp = TestCornellDataset(file_path)
 
 	# Load the grasps
 	bbs = grasping.get_gtbb(idx, rot, zoom_factor)  # 这里返回的是GraspRectangle类

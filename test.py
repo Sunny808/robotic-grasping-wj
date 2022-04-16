@@ -1,5 +1,5 @@
 import numpy as np
-
+import scipy.ndimage as ndi
 from scipy import ndimage as ndi
 from skimage import morphology
 import matplotlib.pyplot as plt
