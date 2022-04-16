@@ -196,6 +196,7 @@ class GraspRectangles:
                 print('Remove wired cross rectangles.')
                 for i in index:
                     del self.grs_max[i]
+                    break
 
         return average_grasp_width
 

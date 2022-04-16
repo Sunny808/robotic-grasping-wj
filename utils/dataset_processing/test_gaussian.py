@@ -337,6 +337,7 @@ def gr_gaussian(pos_out, ang_out, width_out):
 	ang_out = cv2.morphologyEx(ang_out, cv2.MORPH_CLOSE, kernel)
 	ang_out = cv2.morphologyEx(ang_out, cv2.MORPH_OPEN, kernel)
 	cv2.imshow('pos_out', pos_out * 255)
+	cv2.imwrite('pos.png', pos_out)
 
 	thin0 = morphology.thin(pos_out)
 	thin = thin0.astype(np.uint8)
@@ -349,11 +350,11 @@ def gr_gaussian(pos_out, ang_out, width_out):
 	bound_point, pos_out, matrix_flag = find_bound(thin, ang_out)
 	pos_out = broadcast_bound(bound_point, pos_out, matrix_flag, width_out)
 	
-	cv2.namedWindow('thin', cv2.WINDOW_NORMAL)
-	cv2.imshow('thin', thin * 255)
-	cv2.imwrite('thin.png', thin * 255)
-	cv2.imshow('pos_out2', pos_out * 255)
-	cv2.waitKey(0)
+	# cv2.namedWindow('thin', cv2.WINDOW_NORMAL)
+	# cv2.imshow('thin', thin * 255)
+	# cv2.imwrite('thin.png', thin * 255)
+	# cv2.imshow('pos_out2', pos_out * 255)
+	# cv2.waitKey(0)
 	
 	pos_out = gaussian(pos_out, 2.0, preserve_range = True)
 	max_pos = np.max(pos_out)

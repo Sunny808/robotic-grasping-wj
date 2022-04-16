@@ -74,7 +74,7 @@ def crop_image(image, bb):
 	return img
 
 
-for idx in range(508, 600):
+for idx in range(800, 900):
 	print(idx)
 	rot = 0
 	zoom_factor = 1.0
